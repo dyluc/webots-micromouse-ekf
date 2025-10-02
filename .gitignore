@@ -1,0 +1,12 @@
+.DS_STORE
+Thumbs.db
+*.mov
+
+__pycache__/
+*.py[cod]
+*.npz
+*.png
+*.jpg
+
+# Webots
+*.wbproj
