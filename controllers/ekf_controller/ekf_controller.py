@@ -1,29 +1,28 @@
 from robot_simple import RobotWrapper
+from algorithms import LeftWallHugger, RightWallHugger
 import numpy as np
 
 # initialise the robot wrapper
 robot_wrapper = RobotWrapper()
-BASE_VELOCITY = 0.3 * robot_wrapper.max_velocity # slower, consistent motion improves ekf stability and smoothes corrections
-DISTANCE_THRESHOLD = 150
 
 gt_log, od_log = [], []
 steps_counter = 0
 terminate = False
 
+# slower, consistent motion improves ekf stability and smoothes corrections
+nav = LeftWallHugger(
+    base_velocity=0.3 * robot_wrapper.max_velocity,
+    distance_threshold=150)
+
+# nav = RightWallHugger(
+#     base_velocity=0.3 * robot_wrapper.max_velocity, 
+#     distance_threshold=150)
+
 while robot_wrapper.supervisor.step(robot_wrapper.timestep) != -1 and not terminate:
 
+    # uncalibrated proximity sensors
     ps = robot_wrapper.get_prox_sensors()
-
-    lwv, rwv = 0.0, 0.0
-    if ps[0] > DISTANCE_THRESHOLD: # sharp left turn
-        lwv, rwv = -BASE_VELOCITY, BASE_VELOCITY
-    elif ps[1] > DISTANCE_THRESHOLD: # left adjustment
-        lwv, rwv = BASE_VELOCITY * 0.05, BASE_VELOCITY
-    elif ps[2] < DISTANCE_THRESHOLD: # right adjustment
-        lwv, rwv = BASE_VELOCITY, BASE_VELOCITY * 0.05
-    else: # drive forward
-        lwv = rwv = BASE_VELOCITY
-
+    lwv, rwv = nav.get_wheel_velocities(ps)
     robot_wrapper.set_wheel_velocity(lwv, rwv)
 
     # ground truth pose

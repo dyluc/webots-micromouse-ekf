@@ -10,7 +10,7 @@ od = data['od']
 # fig_name = "robot_trajectory_comparison_dead_reckoning.png"
 
 label = "Odometry - EKF Corrected Trajectory (Camera Landmark Observations)"
-fig_name = "robot_trajectory_comparison_ekf.png"
+fig_name = "robot_trajectory_comparison_ekf_leftwall.png"
 
 # take ground truth and odometry x and y
 gt_x, gt_y = gt[:, 0], gt[:, 1]
