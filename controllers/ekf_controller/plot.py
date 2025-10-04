@@ -35,7 +35,7 @@ plt.scatter(od_x, od_y, c="orange", s=1.0, label="Odometry")
 # landmark observations plot as green lines
 if lm.size > 0:
     lm_x, lm_y = lm[:, 0], lm[:, 1]
-    lm_label = "Landmark Corrections (EKF Update Points)"
+    lm_label = "Landmark Corrections \n(EKF Update Points \n< 0.4m Distance)"
     plt.scatter(lm_x, lm_y, c="lime", s=0.5, label=lm_label)
     lm_handle = mlines.Line2D([], [], color="lime", linestyle="-", linewidth=2, label=lm_label)
     handles.append(lm_handle)
@@ -51,6 +51,9 @@ if lm.size > 0:
         [0.09, -1.35]
     ])
     plt.scatter(lm_loc[:, 0], lm_loc[:, 1], c="red", marker="s", s=100)
+
+    lm_loc_handle = mlines.Line2D([], [], color="red", marker="s", linestyle="None", markersize=10, label="Landmarks")
+    handles.append(lm_loc_handle)
 
 # overlay transparent image of map
 img = mpimg.imread("maze_uk2015f_orthographic.png")
