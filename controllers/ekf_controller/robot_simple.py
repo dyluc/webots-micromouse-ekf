@@ -74,6 +74,17 @@ class RobotWrapper():
             "landmark7": (0.09, -1.35)
         }
 
+        # observation coordinates for each landmark, useful information for plotting
+        self.lm_log = {
+            "landmark1": [],
+            "landmark2": [],
+            "landmark3": [],
+            "landmark4": [],
+            "landmark5": [],
+            "landmark6": [],
+            "landmark7": []
+        }
+
     def update_odometry(self):
         # get current wheel motor values
         l, r = self.left_wheel_sensor.getValue(), self.right_wheel_sensor.getValue()
@@ -182,9 +193,6 @@ class RobotWrapper():
     def get_prox_sensors(self):
         return [s.getValue() for s in self.ps]
     
-    def get_pose(self):
-        return self.xhat
-    
     def _get_z(self): # measurement vector: [distance, bearing]
         """
         Findings from camera module recognition calibration:
@@ -216,8 +224,11 @@ class RobotWrapper():
             # compute bearing to landmark
             bearing = math.atan2(pos[1], pos[0])
 
-            # get the associate landmark coordinates
+            # get the associated landmark coordinates
             lm = self.lm[name]
+
+            # track coordinates where landmarks observations are in used to correct trajectory
+            self.lm_log[name].append(self.xhat) # record pose
 
             print(f"z: approximate corrected distance, bearing: {distance}, {bearing} to {name}")
 

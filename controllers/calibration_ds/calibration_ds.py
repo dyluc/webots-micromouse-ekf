@@ -29,10 +29,10 @@ timestep = int(supervisor.getBasicTimeStep())
 robot = supervisor.getFromDef("epuck")
 
 # initialise the sensors
-frontSensor = supervisor.getDevice('front distance sensor')
-leftSensor  = supervisor.getDevice('left distance sensor')
-rightSensor = supervisor.getDevice('right distance sensor')
-rearSensor  = supervisor.getDevice('rear distance sensor')
+frontSensor = supervisor.getDevice("front distance sensor")
+leftSensor  = supervisor.getDevice("left distance sensor")
+rightSensor = supervisor.getDevice("right distance sensor")
+rearSensor  = supervisor.getDevice("rear distance sensor")
 
 ir_sensors = {
     "Front": frontSensor,
