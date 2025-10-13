@@ -62,6 +62,7 @@ class RobotWrapper():
 
         self.prev_l, self.prev_r = None, None
         self.wheel_radius, self.axle_length = 0.02007, 0.057125 # found from calibration
+        # self.wheel_radius, self.axle_length = 0.02, 0.055 # found from proto
 
         # test landmark global positions
         self.lm = {

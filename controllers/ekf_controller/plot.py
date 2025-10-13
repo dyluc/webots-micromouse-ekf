@@ -9,14 +9,20 @@ gt = data["gt"]
 od = data["od"]
 lm = data["lm"]
 
-# title = "Dead-Reckoning (EKF Predict Only): Right Wall Navigation"
-# fig_name = "robot_trajectory_comparison_dead_reckoning_rightwall.png"
-
 title = "EKF Corrected Trajectory (Camera Landmark Observations): Right Wall Navigation"
 fig_name = "robot_trajectory_comparison_ekf_rightwall.png"
 
 gt_x, gt_y = gt[:, 0], gt[:, 1]
 od_x, od_y = od[:, 0], od[:, 1]
+
+# produce euclidian distances and compute mean
+e = ((gt_x - od_x)**2 + (gt_y - od_y)**2)**0.5
+
+mean_error = np.mean(e)
+rmse = np.sqrt(np.mean(e**2))
+print("Errors produced between ground truth labels and predicted x and y:")
+print(f"\tMean Euclidean error: {mean_error:.3g} (3 sf)", )
+print(f"\tRoot mean squared error: {rmse:.3g} (3 sf)", )
 
 plt.figure(figsize=(10, 7))
 
