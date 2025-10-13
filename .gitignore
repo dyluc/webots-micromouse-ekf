@@ -5,8 +5,6 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 *.npz
-*.png
-*.jpg
 
 # Webots
 *.wbproj
